@@ -115,7 +115,8 @@
           min-width: 240px;
           // height: 100%;
           // これを動的に取れるようにする
-          height: calc(100vh - $navbar-total-height);
+          // height: calc(100vh - $navbar-total-height);
+          // height: 1000px;
           overflow-x: hidden;
           transition-timing-function: cubic-bezier(0.2, 0, 0, 1);
           transition-duration: 0.22s;

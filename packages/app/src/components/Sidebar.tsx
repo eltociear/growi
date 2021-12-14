@@ -129,12 +129,13 @@ const Sidebar: FC<Props> = (props: Props) => {
 
 
   const resizableContainer = useRef<HTMLDivElement>(null);
+  const refref = useRef<HTMLDivElement>(null);
 
 
   useEffect(() => {
-    if (resizableContainer != null && resizableContainer.current != null) {
-      setHeight(resizableContainer.current.clientHeight);
-      console.log('resizableContainer.clientHeight', resizableContainer.current.clientHeight);
+    if (refref != null && refref.current != null && resizableContainer.current != null) {
+      setHeight(refref.current.clientHeight);
+      console.log('resizableContainer.clientHeight', refref.current.clientHeight);
       console.log('resizableContainer.clientWidth', resizableContainer.current.clientWidth);
     }
   });
@@ -250,7 +251,7 @@ const Sidebar: FC<Props> = (props: Props) => {
                 onMouseEnter={hoverOnResizableContainerHandler}
                 style={{ width: isCollapsed ? sidebarMinimizeWidth : currentProductNavWidth }}
               >
-                <div className="grw-contextual-navigation-child">
+                <div ref={refref} className="grw-contextual-navigation-child" style={{ height }}>
                   <div role="group" className={`grw-contextual-navigation-sub ${!isHover && isCollapsed ? 'collapsed' : ''}`}>
                     <SidebarContentsWrapper></SidebarContentsWrapper>
                   </div>
