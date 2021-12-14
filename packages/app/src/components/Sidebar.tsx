@@ -91,6 +91,7 @@ const Sidebar: FC<Props> = (props: Props) => {
 
   const [isHover, setHover] = useState(false);
   const [isDragging, setDrag] = useState(false);
+  const [height, setHeight] = useState(0);
 
   const isResizableByDrag = !isResizeDisabled && !isDrawerMode && (!isCollapsed || isHover);
 
@@ -126,7 +127,18 @@ const Sidebar: FC<Props> = (props: Props) => {
     toggleDrawerMode(isDrawerMode);
   }, [isDrawerMode, toggleDrawerMode]);
 
+
   const resizableContainer = useRef<HTMLDivElement>(null);
+
+
+  useEffect(() => {
+    if (resizableContainer != null && resizableContainer.current != null) {
+      setHeight(resizableContainer.current.clientHeight);
+      console.log('resizableContainer.clientHeight', resizableContainer.current.clientHeight);
+      console.log('resizableContainer.clientWidth', resizableContainer.current.clientWidth);
+    }
+  });
+
   const setContentWidth = useCallback((newWidth) => {
     if (resizableContainer.current == null) {
       return;
@@ -221,6 +233,7 @@ const Sidebar: FC<Props> = (props: Props) => {
     document.addEventListener('mouseup', removeEventListeners);
 
   }, [dragableAreaMouseUpHandler, draggableAreaMoveHandler, isResizableByDrag]);
+
 
   return (
     <>
