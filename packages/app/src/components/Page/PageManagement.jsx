@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
-import { UncontrolledTooltip } from 'reactstrap';
+import {
+  Dropdown, DropdownItem, DropdownMenu, DropdownToggle, UncontrolledTooltip,
+} from 'reactstrap';
 import { withTranslation } from 'react-i18next';
 import urljoin from 'url-join';
 
@@ -103,16 +105,16 @@ const LegacyPageManagemenet = (props) => {
   function renderDropdownItemForTopPage() {
     return (
       <>
-        <button className="dropdown-item" type="button" onClick={openPageDuplicateModalHandler}>
+        <DropdownItem className="dropdown-item" type="button" onClick={openPageDuplicateModalHandler}>
           <i className="icon-fw icon-docs"></i> { t('Duplicate') }
-        </button>
+        </DropdownItem>
         {/* TODO Presentation Mode is not function. So if it is really necessary, survey this cause and implement Presentation Mode in top page */}
         {/* <button className="dropdown-item" type="button" onClick={openPagePresentationModalHandler}>
           <i className="icon-fw"><PresentationIcon /></i><span className="d-none d-sm-inline"> { t('Presentation Mode') }</span>
         </button> */}
-        <button type="button" className="dropdown-item" onClick={() => { exportPageHandler('md') }}>
+        <DropdownItem type="button" className="dropdown-item" onClick={() => { exportPageHandler('md') }}>
           <i className="icon-fw icon-cloud-download"></i>{t('export_bulk.export_page_markdown')}
-        </button>
+        </DropdownItem>
         <div className="dropdown-divider"></div>
       </>
     );
@@ -121,18 +123,18 @@ const LegacyPageManagemenet = (props) => {
   function renderDropdownItemForNotTopPage() {
     return (
       <>
-        <button className="dropdown-item" type="button" onClick={openPageRenameModalHandler}>
+        <DropdownItem className="dropdown-item" type="button" onClick={openPageRenameModalHandler}>
           <i className="icon-fw icon-action-redo"></i> { t('Move/Rename') }
-        </button>
-        <button className="dropdown-item" type="button" onClick={openPageDuplicateModalHandler}>
+        </DropdownItem>
+        <DropdownItem className="dropdown-item" type="button" onClick={openPageDuplicateModalHandler}>
           <i className="icon-fw icon-docs"></i> { t('Duplicate') }
-        </button>
-        <button className="dropdown-item" type="button" onClick={openPagePresentationModalHandler}>
+        </DropdownItem>
+        <DropdownItem className="dropdown-item" type="button" onClick={openPagePresentationModalHandler}>
           <i className="icon-fw"><PresentationIcon /></i> { t('Presentation Mode') }
-        </button>
-        <button className="dropdown-item" type="button" onClick={() => { exportPageHandler('md') }}>
+        </DropdownItem>
+        <DropdownItem className="dropdown-item" type="button" onClick={() => { exportPageHandler('md') }}>
           <i className="icon-fw icon-cloud-download"></i>{t('export_bulk.export_page_markdown')}
-        </button>
+        </DropdownItem>
         {/* TODO GW-2746 create api to bulk export pages */}
         {/* <button className="dropdown-item" type="button" onClick={openArchiveModalHandler}>
           <i className="icon-fw"></i>{t('Create Archive Page')}
@@ -146,9 +148,9 @@ const LegacyPageManagemenet = (props) => {
     return (
       <>
         <div className="dropdown-divider"></div>
-        <button className="dropdown-item text-danger" type="button" onClick={openPageDeleteModalHandler}>
+        <DropdownItem className="dropdown-item text-danger" type="button" onClick={openPageDeleteModalHandler}>
           <i className="icon-fw icon-fire"></i> { t('Delete') }
-        </button>
+        </DropdownItem>
       </>
     );
   }
@@ -201,13 +203,13 @@ const LegacyPageManagemenet = (props) => {
   function renderDotsIconForCurrentUser() {
     return (
       <>
-        <button
+        <DropdownToggle
           type="button"
           className={`btn-link nav-link dropdown-toggle dropdown-toggle-no-caret border-0 rounded grw-btn-page-management ${isCompactMode && 'py-0'}`}
           data-toggle="dropdown"
         >
           <i className="text-muted icon-options"></i>
-        </button>
+        </DropdownToggle>
       </>
     );
   }
@@ -229,19 +231,19 @@ const LegacyPageManagemenet = (props) => {
     );
   }
 
-
+  // see: https://reactstrap.github.io/?path=/docs/components-dropdown--container
   return (
-    <>
+    <Dropdown>
       {currentUser == null ? renderDotsIconForGuestUser() : renderDotsIconForCurrentUser()}
-      <div className="dropdown-menu dropdown-menu-right">
+      <DropdownMenu container="body" className="dropdown-menu dropdown-menu-right">
         {isTopPagePath ? renderDropdownItemForTopPage() : renderDropdownItemForNotTopPage()}
-        <button className="dropdown-item" type="button" onClick={openPageTemplateModalHandler}>
+        <DropdownItem className="dropdown-item" type="button" onClick={openPageTemplateModalHandler}>
           <i className="icon-fw icon-magic-wand"></i> { t('template.option_label.create/edit') }
-        </button>
+        </DropdownItem>
         {(!isTopPagePath && isDeletable) && renderDropdownItemForDeletablePage()}
-      </div>
+      </DropdownMenu>
       {renderModals()}
-    </>
+    </Dropdown>
   );
 };
 
